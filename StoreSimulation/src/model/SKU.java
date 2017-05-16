@@ -1,7 +1,5 @@
 package model;
 
-//Stock keeping unit
-
 public class SKU {
 	int skuID;
 	String skuName = null;
@@ -9,13 +7,17 @@ public class SKU {
 	int stockLvl;
 	int minStockLvl;
 	int maxStockLvl;
+	int buyPrice;
+	
 
-	public void setSKU(int skuID, String skuName, double skuPrice, int stock, int minStockLvl, int maxStockLvl){
+	public void setSKU(int skuID, String skuName, double skuPrice, int stockLvl, int minStockLvl, int maxStockLvl, int buyPrice, int sellPrice){
 		this.skuID = skuID;
 		this.skuName = skuName;
 		this.skuPrice = skuPrice;
 		this.stockLvl = stockLvl;
 		this.minStockLvl = minStockLvl;
 		this.maxStockLvl = maxStockLvl;
+		this.buyPrice = buyPrice;
+		
 	}
 }

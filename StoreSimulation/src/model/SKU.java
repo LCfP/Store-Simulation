@@ -1,5 +1,7 @@
 package model;
 
+//Stock keeping unit
+
 public class SKU {
 	int skuID;
 	String skuName = null;

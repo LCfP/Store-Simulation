@@ -1,16 +1,12 @@
 package model;
 
 public class Product {
-	private String ProductName;
-	private double ProductPrice;
-	private int DaysUntilProductIsObsolete;
-	private int ProductEssentialness;
+	private int skuID;
+	private boolean obsolete;
 	
-	public Milk() {
-		this.ProductName = "Milk";
-		this.ProductPrice = 0.50;
-		this.DaysUntilProductIsObsolete = 3;
-		this.ProductEssentialness = 1;
+	public Product(int id) {
+		this.skuID = id;
+		this.obsolete = false;
 	}
 	
 	public Bread() {

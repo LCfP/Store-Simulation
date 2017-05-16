@@ -2,13 +2,18 @@ package model;
 
 public class Customer {
 	
-	private boolean demand;			// True or False
-	private int satisfaction;		// 1 - 5
+	private int[] demand;			// True or False
+	private double satisfaction;		// 0-1
 
-	public Customer () {
-		this.demand = true;
-		this.satisfaction = 5;
+	public Customer (int noOfProducts) {
+		this.demand = new int[noOfProducts];
+		this.satisfaction = 1;
 		
+	}
+	
+	public void setDemand(int product, int productDemand)
+	{
+		demand[product] = productDemand;
 	}
 
 	public void printCustomerDetails(){

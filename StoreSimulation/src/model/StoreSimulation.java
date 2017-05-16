@@ -6,6 +6,10 @@ public class StoreSimulation {
 
 	public static void main(String[] args)
 	{
+		Product milk = new Product("Milk",0.50,3,1);
+		Product bread = new Product("Bread",1.50,3,1);
+		
+		
 		Store newStore = new Store(3);
 		SKU[] skuMatrix = new SKU[3];
 		Random rng = new Random();

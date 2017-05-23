@@ -29,21 +29,17 @@ public class Product {
 		this.arrivalDay = arrivalDay;
 	}
 	
-	 public void productGoesObsolete(){
+	 public boolean productGoesObsolete(){
 
-         if {
-
-                this.Today > (this.arrivalDay + this.daysUntilProductIsObsolete)
-
-                return true
-
-                }
-
+         if (this.Today > (this.arrivalDay + this.daysUntilProductIsObsolete) )
+         {
+              return true;
+         }
          else{
-
-                return false
+                return false;
 
                 }
+	 }
 	
 	int getproductID(){
 		return productID;

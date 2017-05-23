@@ -1,74 +1,76 @@
 package model;
 
 public class Product {
-	private int skuID;
-	private boolean obsolete;
+	private int productID;
+	private boolean productGoesObsolete;
+	private String productName;
+	private int daysUntilProductIsObsolete;
+	private double productPrice;
+	private int productEssentialness;
+	private int arrivalDay;
 	
-	public Product(int id) {
-		this.skuID = id;
-		this.obsolete = false;
+	public Product(int id, boolean productGoesObsolete, String productName, double productPrice, int daysUntilProductIsObsolete, int productEssentialness, int arrivalDay) {
+		this.productID = id;
+		this.productGoesObsolete = false;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.daysUntilProductIsObsolete = daysUntilProductIsObsolete;
+		this.productEssentialness = productEssentialness;
+		this.arrivalDay = arrivalDay;
+	}
+		
+	public void setProduct(int id, boolean productGoesObsolete, String productName, double productPrice, int daysUntilProductIsObsolete, int productEssentialness, int arrivalDay) {
+		this.productID = id;
+		this.productGoesObsolete = false;
+		this.productName = productName;
+		this.productPrice = productPrice;
+		this.daysUntilProductIsObsolete = daysUntilProductIsObsolete;
+		this.productEssentialness = productEssentialness;
+		this.arrivalDay = arrivalDay;
 	}
 	
-	public Bread() {
-		this.ProductName = "Bread";
-		this.ProductPrice = 1.50;
-		this.DaysUntilProductIsObsolete = 5;
-		this.ProductEssentialness = 1;
+	 public void productGoesObsolete(){
+
+         if {
+
+                this.Today > (this.arrivalDay + this.daysUntilProductIsObsolete)
+
+                return true
+
+                }
+
+         else{
+
+                return false
+
+                }
+	
+	int getproductID(){
+		return productID;
 	}
 	
-	public Butter() {
-		this.ProductName = "Butter";
-		this.ProductPrice = 1.00;
-		this.DaysUntilProductIsObsolete = 20;
-		this.ProductEssentialness = 2;
+	boolean getproductGoesObsoletes(){
+		return productGoesObsolete;
 	}
 	
-	public Cheese() {
-		this.ProductName = "Cheese";
-		this.ProductPrice = 3.00;
-		this.DaysUntilProductIsObsolete = 10;
-		this.ProductEssentialness = 2;
+	String getproductName(){
+		return productName;
 	}
 	
-	public Meat() {
-		this.ProductName = "Meat";
-		this.ProductPrice = 4.00;
-		this.DaysUntilProductIsObsolete = 1;
-		this.ProductEssentialness = 2;
+	int getdaysUntilProductIsObsolete(){
+		return daysUntilProductIsObsolete;
 	}
 	
-	public Appels() {
-		this.ProductName = "Appels";
-		this.ProductPrice = 1.20;
-		this.DaysUntilProductIsObsolete = 3;
-		this.ProductEssentialness = 3;
+	double getproductPrice(){
+		return productPrice;
 	}
 	
-	public Bananas() {
-		this.ProductName = "Bananas";
-		this.ProductPrice = 1.40;
-		this.DaysUntilProductIsObsolete = 3;
-		this.ProductEssentialness = 3;
+	int getproductEssentialness(){
+		return productEssentialness;
 	}
 	
-	public Tomatoes() {
-		this.ProductName = "Tomatoes";
-		this.ProductPrice = 2.60;
-		this.DaysUntilProductIsObsolete = 2;
-		this.ProductEssentialness = 3;
+	int getarrivalDay(){
+		return arrivalDay;
 	}
 	
-	public Potatoes() {
-		this.ProductName = "Potatoes";
-		this.ProductPrice = 1.90;
-		this.DaysUntilProductIsObsolete = 5;
-		this.ProductEssentialness = 3;
-	}
-	
-	public void printProductDetails(){
-		System.out.println("Product: " + this.ProductName);
-		System.out.println("Price: " + this.ProductPrice);
-		System.out.println("Obsolete date: " + this.DaysuntilProductIsObsolete);
-		System.out.println("Product essentialness: " + this.ProductEssentialness);
-	}
 }

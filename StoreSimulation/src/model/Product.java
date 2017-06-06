@@ -2,36 +2,22 @@ package model;
 
 public class Product {
 	private int productID;
-	private boolean productGoesObsolete;
 	private String productName;
 	private int daysUntilProductIsObsolete;
 	private double productPrice;
-	private int productEssentialness;
 	private int arrivalDay;
 	
-	public Product(int id, boolean productGoesObsolete, String productName, double productPrice, int daysUntilProductIsObsolete, int productEssentialness, int arrivalDay) {
+	public Product(int id, String productName, double productPrice, int daysUntilProductIsObsolete, int arrivalDay) {
 		this.productID = id;
-		this.productGoesObsolete = false;
 		this.productName = productName;
 		this.productPrice = productPrice;
 		this.daysUntilProductIsObsolete = daysUntilProductIsObsolete;
-		this.productEssentialness = productEssentialness;
-		this.arrivalDay = arrivalDay;
-	}
-		
-	public void setProduct(int id, boolean productGoesObsolete, String productName, double productPrice, int daysUntilProductIsObsolete, int productEssentialness, int arrivalDay) {
-		this.productID = id;
-		this.productGoesObsolete = false;
-		this.productName = productName;
-		this.productPrice = productPrice;
-		this.daysUntilProductIsObsolete = daysUntilProductIsObsolete;
-		this.productEssentialness = productEssentialness;
 		this.arrivalDay = arrivalDay;
 	}
 	
-	 public boolean productGoesObsolete(){
+	 public boolean isObsolete(int day){
 
-         if (this.Today > (this.arrivalDay + this.daysUntilProductIsObsolete) )
+         if (day > (this.arrivalDay + this.daysUntilProductIsObsolete) )
          {
               return true;
          }
@@ -45,10 +31,6 @@ public class Product {
 		return productID;
 	}
 	
-	boolean getproductGoesObsoletes(){
-		return productGoesObsolete;
-	}
-	
 	String getproductName(){
 		return productName;
 	}
@@ -59,10 +41,6 @@ public class Product {
 	
 	double getproductPrice(){
 		return productPrice;
-	}
-	
-	int getproductEssentialness(){
-		return productEssentialness;
 	}
 	
 	int getarrivalDay(){

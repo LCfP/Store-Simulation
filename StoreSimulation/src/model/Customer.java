@@ -1,24 +1,33 @@
 package model;
 
+import java.util.Random;
+
 public class Customer {
 	
-	private int[] demand;			// True or False
-	private double satisfaction;		// 0-1
+	private int demand;			// True or False
 
-	public Customer (int noOfProducts) {
-		this.demand = new int[noOfProducts];
-		this.satisfaction = 1;
+	public Customer () {
+		this.demand = 0;
 		
 	}
 	
-	public void setDemand(int product, int productDemand)
+	public void setDemand(int productDemand)
 	{
-		demand[product] = productDemand;
+		demand = productDemand;
+	}
+	
+	public void setRandomDemand(Random r)
+	{
+		demand = r.nextInt(StoreSimulation.maxDemand);
+	}
+	
+	public int getDemand(){
+		return demand;
 	}
 
 	public void printCustomerDetails(){
 		System.out.println("Customer demand is" + this.demand);
-		System.out.println("Customer satisfaction is" + this.satisfaction);
 		
 	}
+
 }

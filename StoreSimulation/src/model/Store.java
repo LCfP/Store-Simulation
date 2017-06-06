@@ -1,30 +1,50 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Store {
-	private SKU[] skuMatrix; // Create a SKUarray with 3 SKUs.
-	private int orderSize;
-	private int balance = 10000;	// initial balance (cash) of store is 10K
-
-	public Store(int noSKUs)
+	// shelves
+	private ArrayList<Product> shelves; // shelve has 4 columns (products) and 10 spots (10 pcs. of every poduct).
+	private double satisfaction;
+	
+	public Store()
 	{
-		skuMatrix = new SKU[noSKUs];
-	}
-
-	public void reorder(){
-		for(int i = 0; i < skuMatrix.length; i++){
-			if(skuMatrix[i].stockLvl < skuMatrix[i].minStockLvl ){
-				orderSize = skuMatrix[i].maxStockLvl - skuMatrix[i].stockLvl ; // calculate how many pieces will be ordered
-				balance = balance - orderSize * skuMatrix[i].buyPrice; // Pay the supplier
-				skuMatrix[i].stockLvl = skuMatrix[i].maxStockLvl; // When ROP is reached, stock will be reset to maxStockLvl.
-				System.out.println(skuMatrix[i].skuName + " has been reordered");
-			}
-		}
+		this.shelves = new ArrayList<Product>(0);
+		this.satisfaction = 1;
 	}
 	
-	public void setSkuMatrix(SKU[] skuMatrix2){
-		skuMatrix = skuMatrix2;
+	// add product
+	public void AddProductToShelve(Product product){
+		shelves.add(product);
+		
 	}
-	public void decreaseStock(int i){
-		skuMatrix[i].stockLvl = skuMatrix[i].stockLvl -1;
+	// remove product
+	public void RemoveProduct(Product product){
+		shelves.remove(product);
+	}
+	
+	public void serveCustomer(Customer customer)
+	{
+		if(customer.getDemand() <= shelves.size())
+		{
+			for(int idx=0;idx<customer.getDemand();idx++)
+				shelves.remove(0);
+			
+			this.satisfaction = Math.min(1,this.satisfaction+StoreSimulation.satisfactionChange);
+		}
+		else
+		{
+			this.satisfaction = Math.max(0,this.satisfaction-StoreSimulation.satisfactionChange);
+			
+		}
+			
+	}
+	
+	public ArrayList<Product> getShelves(){
+		return shelves;
+	}
+
+	public double getSatisfaction() {
+		return satisfaction;
 	}
 }

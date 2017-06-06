@@ -4,6 +4,66 @@ import java.util.Random;
 
 public class StoreSimulation {
 
+	public static final int nrProductTypes = 1;
+	public static final int maxNoCustomers = 10;
+	public static final int maxDemand = 5;
+	
+	public static final int initialInventory = 100;
+	
+	//Product info
+	public static final String productName = "Milk";
+	public static final double productPrice = 1;
+	public static final int daysUntilObsolete = 3;
+	
+	public static final double satisfactionChange = 0.05;
+	
+	
+	public static int IDcounter = 0;
+	
+	public static Store store;
+	
+	public void initialize()
+	{
+		store = new Store();
+		Product product;
+		
+		for(int idx=0;idx<initialInventory;idx++)
+		{
+			product = new Product(IDcounter, productName, productPrice, daysUntilObsolete,0);
+			IDcounter++;
+			
+			store.AddProductToShelve(product);
+		}
+	}
+	
+	public void simulate(int noOfDays,Random r)
+	{
+		for(int idx=0;idx<noOfDays;idx++)
+		{
+			//check obsoleteness
+			for(Product p:store.getShelves())//smart loop
+			{
+				if(p.isObsolete(idx))
+					store.RemoveProduct(p);
+			}
+			
+			//make and serve customers
+			int noOfNewCustomers = r.nextInt((int) (store.getSatisfaction()*maxNoCustomers) );
+			Customer c;
+			
+			for(int idx2=0;idx2<noOfNewCustomers;idx2++)
+			{
+				c = new Customer();
+				c.setRandomDemand(r);
+				
+				store.serveCustomer(c);
+			}
+			
+			//reorder
+			
+		}
+	}
+
 	public static void main(String[] args)
 	{
 		Product milk = new Product("Milk",0.50,3,1);

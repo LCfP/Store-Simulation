@@ -1,6 +1,9 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Random;
+
+import org.omg.CORBA.ShortSeqHelper;
 
 public class StoreSimulation {
 
@@ -9,6 +12,10 @@ public class StoreSimulation {
 	public static final int maxDemand = 5;
 	
 	public static final int initialInventory = 100;
+	public static final int minInventory = 70;
+	public static final int maxInventory = 100;
+	public static int currentInventory = 0;
+	public static int productsSoldPerDay = 0;
 	
 	//Product info
 	public static final String productName = "Milk";
@@ -22,7 +29,7 @@ public class StoreSimulation {
 	
 	public static Store store;
 	
-	public void initialize()
+	public static void initialize()
 	{
 		store = new Store();
 		Product product;
@@ -33,69 +40,68 @@ public class StoreSimulation {
 			IDcounter++;
 			
 			store.AddProductToShelve(product);
+			currentInventory++; // counter which counts how many products are there
 		}
 	}
 	
-	public void simulate(int noOfDays,Random r)
+	public static void simulate(int noOfDays,Random r)
 	{
-		for(int idx=0;idx<noOfDays;idx++)
+		for(int idx=0;idx<noOfDays;idx++)		// for every day
 		{
+			ArrayList<Integer> indexNos = new ArrayList<Integer>(0);
 			//check obsoleteness
 			for(Product p:store.getShelves())//smart loop
 			{
 				if(p.isObsolete(idx))
-					store.RemoveProduct(p);
+					indexNos.add(store.getShelves().indexOf(p));
 			}
 			
+			for(int idx2=(indexNos.size()-1);idx2>=0;idx2--)
+			{
+				store.getShelves().remove(indexNos.get(idx2));
+				currentInventory = currentInventory - indexNos.size();  // update currentInventory
+				
+			}
+			System.out.printf("\nDay %d:\n", idx);
+			System.out.printf("No. of obsolete products thrown away: %d\n", indexNos.size());
 			//make and serve customers
 			int noOfNewCustomers = r.nextInt((int) (store.getSatisfaction()*maxNoCustomers) );
 			Customer c;
-			
+			System.out.printf("No. of customers %d:\n", noOfNewCustomers);
 			for(int idx2=0;idx2<noOfNewCustomers;idx2++)
 			{
 				c = new Customer();
 				c.setRandomDemand(r);
 				
 				store.serveCustomer(c);
+				productsSoldPerDay = productsSoldPerDay + c.getRandomDemand(); // update products per day counter
+				currentInventory = currentInventory - productsSoldPerDay;
+				
 			}
-			
-			//reorder
-			
+			System.out.printf("Inventory left before reorder: %d:\n " , store.getShelveSize());
+			// reorder
+			store.determineReorderSize();
+			Product product;
+			for(int idx3=0;idx3 < store.reorderSize;idx3++)
+			{
+				product = new Product(IDcounter, productName, productPrice, daysUntilObsolete,0);
+				IDcounter++;
+				
+				store.AddProductToShelve(product);
+			}
+			System.out.printf("No. of products reordered: %d\n", store.getReorderSize());
+			System.out.printf("No. of products sold this day: %d\n", productsSoldPerDay);
+			productsSoldPerDay = 0; // reset products sold per day after every day.
 		}
 	}
 
 	public static void main(String[] args)
 	{
-		Product milk = new Product("Milk",0.50,3,1);
-		Product bread = new Product("Bread",1.50,3,1);
+		initialize();
+		Random r = new Random();
+		r.setSeed(2);
+		simulate(5,r);
 		
-		
-		Store newStore = new Store(3);
-		SKU[] skuMatrix = new SKU[3];
-		Random rng = new Random();
-
-		SKU brood = new SKU();
-		brood.setSKU(1, "Bread", 1.5, 10, 5, 15, 1, 0);
-		skuMatrix[0] = brood;
-		SKU boter = new SKU();
-		boter.setSKU(1, "Butter", 2.5, 20, 7, 20,2, 0);
-		skuMatrix[1] = boter;
-		SKU melk = new SKU();
-		melk.setSKU(1, "Milk", 1.0, 20, 10, 30, 0 ,0);
-		skuMatrix[2] = melk;
-
-		newStore.setSkuMatrix(skuMatrix);
-		System.out.println("Product database filled with" );
-		System.out.println(skuMatrix[0].skuName);
-		System.out.println(skuMatrix[1].skuName);
-		System.out.println(skuMatrix[2].skuName);
-		
-		for(int i = 0; i<100; i++){
-			int randomProduct = rng.nextInt(3);
-			newStore.decreaseStock(randomProduct); // make demand function for simulation
-			System.out.println("Customer buys " + skuMatrix[randomProduct].skuName);
-			newStore.reorder();	// Check for reorders
-		}
 	}
 
 }

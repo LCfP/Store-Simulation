@@ -6,6 +6,7 @@ public class Store {
 	// shelves
 	private ArrayList<Product> shelves; // shelve has 4 columns (products) and 10 spots (10 pcs. of every poduct).
 	private double satisfaction;
+	int reorderSize = 0;
 	
 	public Store()
 	{
@@ -40,11 +41,27 @@ public class Store {
 			
 	}
 	
+	public void determineReorderSize(){
+		if(shelves.size() < StoreSimulation.minInventory){
+			
+			this.reorderSize = StoreSimulation.maxInventory - shelves.size();
+			
+		}else{
+			this.reorderSize = 0;
+		}
+	}
+	public int getReorderSize(){
+		return reorderSize;
+	}
+	
 	public ArrayList<Product> getShelves(){
 		return shelves;
 	}
 
 	public double getSatisfaction() {
 		return satisfaction;
+	}
+	public int getShelveSize(){
+		return shelves.size();
 	}
 }

@@ -21,6 +21,10 @@ public class Customer {
 		demand = r.nextInt(StoreSimulation.maxDemand);
 	}
 	
+	public int getRandomDemand(){
+		return demand;
+	}
+	
 	public int getDemand(){
 		return demand;
 	}

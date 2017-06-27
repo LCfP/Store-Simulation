@@ -10,10 +10,10 @@ public class StoreSimulation {
 	public static final int nrProductTypes = 1;
 	public static final int maxNoCustomers = 10;
 	public static final int maxDemand = 5;
-	
-	public static final int initialInventory = 100;
-	public static final int minInventory = 70;
-	public static final int maxInventory = 100;
+	public static int day = 0;
+	public static final int initialInventory = 50;
+	public static final int minInventory = 20;
+	public static final int maxInventory = 50;
 	public static int currentInventory = 0;
 	public static int productsSoldPerDay = 0;
 	
@@ -24,7 +24,7 @@ public class StoreSimulation {
 	
 	public static final double satisfactionChange = 0.05;
 	
-	
+	static ArrayList<Integer> indexNos = new ArrayList<Integer>(0);
 	public static int IDcounter = 0;
 	
 	public static Store store;
@@ -36,9 +36,8 @@ public class StoreSimulation {
 		
 		for(int idx=0;idx<initialInventory;idx++)
 		{
-			product = new Product(IDcounter, productName, productPrice, daysUntilObsolete,0);
+			product = new Product(IDcounter, productName, productPrice, daysUntilObsolete,day);
 			IDcounter++;
-			
 			store.AddProductToShelve(product);
 			currentInventory++; // counter which counts how many products are there
 		}
@@ -48,12 +47,17 @@ public class StoreSimulation {
 	{
 		for(int idx=0;idx<noOfDays;idx++)		// for every day
 		{
-			ArrayList<Integer> indexNos = new ArrayList<Integer>(0);
+			day = idx;
+			indexNos.clear();
 			//check obsoleteness
 			for(Product p:store.getShelves())//smart loop
 			{
-				if(p.isObsolete(idx))
+				p.isObsolete(day);
+				boolean obsoleteStatus = p.isObsolete(day);
+				
+				if(obsoleteStatus == true){
 					indexNos.add(store.getShelves().indexOf(p));
+				}
 			}
 			
 			for(int idx2=(indexNos.size()-1);idx2>=0;idx2--)
@@ -84,7 +88,7 @@ public class StoreSimulation {
 			Product product;
 			for(int idx3=0;idx3 < store.reorderSize;idx3++)
 			{
-				product = new Product(IDcounter, productName, productPrice, daysUntilObsolete,0);
+				product = new Product(IDcounter, productName, productPrice, daysUntilObsolete,day);
 				IDcounter++;
 				
 				store.AddProductToShelve(product);
@@ -92,6 +96,10 @@ public class StoreSimulation {
 			System.out.printf("No. of products reordered: %d\n", store.getReorderSize());
 			System.out.printf("No. of products sold this day: %d\n", productsSoldPerDay);
 			productsSoldPerDay = 0; // reset products sold per day after every day.
+			
+			for(Product p:store.getShelves()){
+				
+			}
 		}
 	}
 
@@ -100,7 +108,8 @@ public class StoreSimulation {
 		initialize();
 		Random r = new Random();
 		r.setSeed(2);
-		simulate(5,r);
+		simulate(20,r);
+		System.out.println("Customers not served: "+store.customersNotServed);
 		
 	}
 

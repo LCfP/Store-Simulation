@@ -7,6 +7,7 @@ public class Store {
 	private ArrayList<Product> shelves; // shelve has 4 columns (products) and 10 spots (10 pcs. of every poduct).
 	private double satisfaction;
 	int reorderSize = 0;
+	public int customersNotServed = 0;
 	
 	public Store()
 	{
@@ -35,7 +36,7 @@ public class Store {
 		}
 		else
 		{
-			this.satisfaction = Math.max(0,this.satisfaction-StoreSimulation.satisfactionChange);
+			customersNotServed++;
 			
 		}
 			
